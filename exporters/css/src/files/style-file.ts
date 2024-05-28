@@ -16,8 +16,10 @@ export function styleOutputFile(type: TokenType, tokens: Array<Token>, tokenGrou
   const mappedTokens = new Map(tokens.map((token) => [token.id, token]))
   const cssVariables = tokensOfType.map((token) => convertedToken(token, mappedTokens, tokenGroups));
   const tailwind = cssVariables.map((css) => {
-    const [key, value] = css.split(": ");
-    return `'${key.replace('--', '')}': var(${value}),`
+    const [key] = css.split(": ");
+    const indentString = " ".repeat(exportConfiguration.indent)
+    const name = key.trim().replace('--', '');
+    return `${indentString}'${name}': var(--${name}),`
   }).join('\n')
 
   // Create file content
@@ -37,7 +39,7 @@ export function styleOutputFile(type: TokenType, tokens: Array<Token>, tokenGrou
     content: content,
   }),FileHelper.createTextFile({
     relativePath: exportConfiguration.baseStyleFilePath,
-    fileName: `${exportConfiguration.styleFileNames[type]}-tailwind`,
+    fileName: `${exportConfiguration.styleFileNames[type].replace('.css', '')}-tailwind.cjs`,
     content: tailwindContent,
   })
       ]
