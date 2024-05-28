@@ -1,4 +1,4 @@
-import { NamingHelper, CSSHelper } from "@supernovaio/export-helpers"
+import {NamingHelper, CSSHelper, StringCase} from "@supernovaio/export-helpers"
 import { Token, TokenGroup } from "@supernovaio/sdk-exporters"
 import { exportConfiguration } from ".."
 
@@ -29,6 +29,5 @@ export function convertedToken(token: Token, mappedTokens: Map<string, Token>, t
 function tokenVariableName(token: Token, tokenGroups: Array<TokenGroup>): string {
   const prefix = exportConfiguration.tokenPrefixes[token.tokenType]
   const parent = tokenGroups.find((group) => group.id === token.parentGroupId)!
-  return `--${parent}-${token.name}`
-  // return NamingHelper.codeSafeVariableNameForToken(token, exportConfiguration.tokenNameStyle, parent, prefix)
+  return NamingHelper.codeSafeVariableNameForToken(token, StringCase.paramCase, parent, null)
 }
