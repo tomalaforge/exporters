@@ -3,7 +3,7 @@ import { OutputTextFile, Token, TokenGroup, TokenType } from "@supernovaio/sdk-e
 import { exportConfiguration } from ".."
 import { convertedToken } from "../content/token"
 
-export function styleOutputFile(type: TokenType, tokens: Array<Token>, tokenGroups: Array<TokenGroup>): OutputTextFile | null {
+export function styleOutputFile(type: TokenType, tokens: Array<Token>, tokenGroups: Array<TokenGroup>): OutputTextFile[] | null {
   // Filter tokens by top level type
   const tokensOfType = tokens.filter((token) => token.tokenType === type)
 
@@ -14,19 +14,31 @@ export function styleOutputFile(type: TokenType, tokens: Array<Token>, tokenGrou
 
   // Convert all tokens to CSS variables
   const mappedTokens = new Map(tokens.map((token) => [token.id, token]))
-  const cssVariables = tokensOfType.map((token) => convertedToken(token, mappedTokens, tokenGroups)).join("\n")
+  const cssVariables = tokensOfType.map((token) => convertedToken(token, mappedTokens, tokenGroups));
+  const tailwind = cssVariables.map((css) => {
+    const [key, value] = css.split(": ");
+    return `'${key.replace('--', '')}': var(${value}),`
+  }).join('\n')
 
   // Create file content
-  let content = `:root {\n${cssVariables}\n}`
+  let content = `:root {\n${cssVariables.join('\n')}\n}`
   if (exportConfiguration.showGeneratedFileDisclaimer) {
     // Add disclaimer to every file if enabled
     content = `/* ${exportConfiguration.disclaimer} */\n${content}`
   }
 
+  //create tailwind file content
+  let tailwindContent = `module.exports = {\n${tailwind}\n}`
+
   // Retrieve content as file which content will be directly written to the output
-  return FileHelper.createTextFile({
+  return [FileHelper.createTextFile({
     relativePath: exportConfiguration.baseStyleFilePath,
     fileName: exportConfiguration.styleFileNames[type],
     content: content,
+  }),FileHelper.createTextFile({
+    relativePath: exportConfiguration.baseStyleFilePath,
+    fileName: `${exportConfiguration.styleFileNames[type]}-tailwind`,
+    content: tailwindContent,
   })
+      ]
 }
