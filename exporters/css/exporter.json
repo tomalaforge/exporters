@@ -1,10 +1,9 @@
 {
     "id": "supernovaio.exporter-css",
-    "name": "CSS w/ theme support",
+    "name": "CSS + tailwind exporter",
     "description": "Export your design system tokens into CSS variables and definitions.",
-    "author": "Jiri Trecak",
-    "organization": "Supernova.io",
-    "homepage": "https://supernova.io",
+    "author": "Thomas Laforge",
+    "organization": "rosa.be",
     "version": "2.0.1",
     "usesBrands": true,
     "usesThemes": true,
@@ -12,6 +11,7 @@
     "engine": "latest",
     "tags": [
         "CSS",
+        "tailwind",
         "Tokens"
     ]
 }
