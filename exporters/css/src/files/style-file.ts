@@ -19,7 +19,7 @@ export function styleOutputFile(type: TokenType, tokens: Array<Token>, tokenGrou
     const [key] = css.split(": ");
     const indentString = " ".repeat(exportConfiguration.indent)
     const name = key.trim().replace('--', '');
-    return `${indentString}'${name}': var(--${name}),`
+    return `${indentString}'${name}': 'var(--${name})',`
   }).join('\n')
 
   // Create file content
