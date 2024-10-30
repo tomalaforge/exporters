@@ -30,7 +30,7 @@ export function styleOutputFile(type: TokenType, tokens: Array<Token>, tokenGrou
   }
 
   //create tailwind file content
-  let tailwindContent = `module.exports = {\n${tailwind}\n}`
+  let tailwindContent = `module.exports = {\n${tailwind}\n11111}`
 
   // Retrieve content as file which content will be directly written to the output
   return [FileHelper.createTextFile({

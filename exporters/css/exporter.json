@@ -4,7 +4,7 @@
     "description": "Export your design system tokens into CSS variables and definitions.",
     "author": "Thomas Laforge",
     "organization": "rosa.be",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "usesBrands": true,
     "usesThemes": true,
     "executable": "/dist/build.js",
