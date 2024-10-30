@@ -23,7 +23,7 @@ export function styleOutputFile(type: TokenType, tokens: Array<Token>, tokenGrou
   }).join('\n')
 
   // Create file content
-  let content = `:root {\n${cssVariables.join('\n')}\n}`
+  let content = `:root {\n${cssVariables.join('\n')}\n\n${exportConfiguration.baseStyleFilePath}}`
   if (exportConfiguration.showGeneratedFileDisclaimer) {
     // Add disclaimer to every file if enabled
     content = `/* ${exportConfiguration.disclaimer} */\n${content}\n${exportConfiguration.baseStyleFilePath}`
