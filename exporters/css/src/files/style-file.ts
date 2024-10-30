@@ -26,7 +26,7 @@ export function styleOutputFile(type: TokenType, tokens: Array<Token>, tokenGrou
   let content = `:root {\n${cssVariables.join('\n')}\n}`
   if (exportConfiguration.showGeneratedFileDisclaimer) {
     // Add disclaimer to every file if enabled
-    content = `/* ${exportConfiguration.disclaimer} */\n${content}`
+    content = `/* ${exportConfiguration.disclaimer} */\n${content}\n${exportConfiguration.baseStyleFilePath}`
   }
 
   //create tailwind file content
@@ -34,11 +34,11 @@ export function styleOutputFile(type: TokenType, tokens: Array<Token>, tokenGrou
 
   // Retrieve content as file which content will be directly written to the output
   return [FileHelper.createTextFile({
-    relativePath: '/',
+    relativePath: exportConfiguration.baseStyleFilePath,
     fileName: exportConfiguration.styleFileNames[type],
     content: content,
   }),FileHelper.createTextFile({
-    relativePath: '/',
+    relativePath: exportConfiguration.baseStyleFilePath,
     fileName: `${exportConfiguration.styleFileNames[type].replace('.css', '')}-tailwind.cjs`,
     content: tailwindContent,
   })
