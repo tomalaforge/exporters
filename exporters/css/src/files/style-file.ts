@@ -34,11 +34,11 @@ export function styleOutputFile(type: TokenType, tokens: Array<Token>, tokenGrou
 
   // Retrieve content as file which content will be directly written to the output
   return [FileHelper.createTextFile({
-    relativePath: exportConfiguration.baseStyleFilePath,
+    relativePath: '/',
     fileName: exportConfiguration.styleFileNames[type],
     content: content,
   }),FileHelper.createTextFile({
-    relativePath: exportConfiguration.baseStyleFilePath,
+    relativePath: '/',
     fileName: `${exportConfiguration.styleFileNames[type].replace('.css', '')}-tailwind.cjs`,
     content: tailwindContent,
   })
