@@ -23,22 +23,22 @@ export function styleOutputFile(type: TokenType, tokens: Array<Token>, tokenGrou
   }).join('\n')
 
   // Create file content
-  let content = `:root {\n${cssVariables.join('\n')}\n}`
+  let content = `:root {\n${cssVariables.join('\n')}\n}\n`
   if (exportConfiguration.showGeneratedFileDisclaimer) {
     // Add disclaimer to every file if enabled
     content = `/* ${exportConfiguration.disclaimer} */\n${content}`
   }
 
   //create tailwind file content
-  let tailwindContent = `module.exports = {\n${tailwind}\n}`
+  let tailwindContent = `module.exports = {\n${tailwind}\n}\n`
 
   // Retrieve content as file which content will be directly written to the output
   return [FileHelper.createTextFile({
-    relativePath: exportConfiguration.baseStyleFilePath,
+    relativePath: exportConfiguration.baseStyleFilePath.replace('/styles', ''),
     fileName: exportConfiguration.styleFileNames[type],
     content: content,
   }),FileHelper.createTextFile({
-    relativePath: exportConfiguration.baseStyleFilePath,
+    relativePath: exportConfiguration.baseStyleFilePath.replace('/styles', ''),
     fileName: `${exportConfiguration.styleFileNames[type].replace('.css', '')}-tailwind.cjs`,
     content: tailwindContent,
   })
